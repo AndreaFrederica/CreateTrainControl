@@ -1,0 +1,8 @@
+{
+  "itemGroup.create_train_control": "Example Mod Tab",
+  "block.create_train_control.example_block": "Example Block",
+  "item.create_train_control.example_item": "Example Item",
+
+  "subtitle.create_train_control.motor": "Motor sound",
+  "subtitle.create_train_control.inverter": "Inverter sound"
+}

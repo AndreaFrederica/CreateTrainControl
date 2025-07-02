@@ -1,0 +1,102 @@
+{
+  "motor_1": {
+    "subtitle": "subtitle.create_train_control.motor",
+    "sounds": [
+      {
+        "type": "file",
+        "attenuation_distance": 128,
+        "name": "create_train_control:motor_1"
+      }
+    ]
+  },
+  "motor_2": {
+    "subtitle": "subtitle.create_train_control.motor",
+    "sounds": [
+      {
+        "type": "file",
+        "attenuation_distance": 128,
+        "name": "create_train_control:motor_2"
+      }
+    ]
+  },
+  "vvvf_1": {
+    "subtitle": "subtitle.create_train_control.inverter",
+    "sounds": [
+      {
+        "type": "file",
+        "attenuation_distance": 128,
+        "name": "create_train_control:vvvf_1"
+      }
+    ]
+  },
+  "vvvf_2": {
+    "subtitle": "subtitle.create_train_control.inverter",
+    "sounds": [
+      {
+        "type": "file",
+        "attenuation_distance": 128,
+        "name": "create_train_control:vvvf_2"
+      }
+    ]
+  },
+  "vvvf_3": {
+    "subtitle": "subtitle.create_train_control.inverter",
+    "sounds": [
+      {
+        "type": "file",
+        "attenuation_distance": 128,
+        "name": "create_train_control:vvvf_3"
+      }
+    ]
+  },
+  "vvvf_4": {
+    "subtitle": "subtitle.create_train_control.inverter",
+    "sounds": [
+      {
+        "type": "file",
+        "attenuation_distance": 128,
+        "name": "create_train_control:vvvf_4"
+      }
+    ]
+  },
+  "vvvf_5": {
+    "subtitle": "subtitle.create_train_control.inverter",
+    "sounds": [
+      {
+        "type": "file",
+        "attenuation_distance": 128,
+        "name": "create_train_control:vvvf_5"
+      }
+    ]
+  },
+  "vvvf_6": {
+    "subtitle": "subtitle.create_train_control.inverter",
+    "sounds": [
+      {
+        "type": "file",
+        "attenuation_distance": 128,
+        "name": "create_train_control:vvvf_6"
+      }
+    ]
+  },
+  "vvvf_7": {
+    "subtitle": "subtitle.create_train_control.inverter",
+    "sounds": [
+      {
+        "type": "file",
+        "attenuation_distance": 128,
+        "name": "create_train_control:vvvf_7"
+      }
+    ]
+  },
+  "vvvf_8": {
+    "subtitle": "subtitle.create_train_control.inverter",
+    "sounds": [
+      {
+        "type": "file",
+        "attenuation_distance": 128,
+        "name": "create_train_control:vvvf_8"
+      }
+    ]
+  }
+}
