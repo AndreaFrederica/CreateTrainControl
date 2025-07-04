@@ -1,0 +1,93 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "Client",
+      "presentation": {
+        "group": "Mod Development - create_train_control",
+        "order": 0
+      },
+      "projectName": "create_train_control",
+      "mainClass": "net.neoforged.devlaunch.Main",
+      "args": [
+        "@C:\\Data\\Projects\\create_train_control\\build\\moddev\\clientRunProgramArgs.txt"
+      ],
+      "vmArgs": [
+        "@C:\\Data\\Projects\\create_train_control\\build\\moddev\\clientRunVmArgs.txt",
+        "-Dfml.modFolders\u003dcreate_train_control%%C:\\Data\\Projects\\create_train_control\\bin\\main"
+      ],
+      "cwd": "${workspaceFolder}\\run",
+      "env": {},
+      "console": "internalConsole",
+      "shortenCommandLine": "none"
+    },
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "Data",
+      "presentation": {
+        "group": "Mod Development - create_train_control",
+        "order": 1
+      },
+      "projectName": "create_train_control",
+      "mainClass": "net.neoforged.devlaunch.Main",
+      "args": [
+        "@C:\\Data\\Projects\\create_train_control\\build\\moddev\\dataRunProgramArgs.txt"
+      ],
+      "vmArgs": [
+        "@C:\\Data\\Projects\\create_train_control\\build\\moddev\\dataRunVmArgs.txt",
+        "-Dfml.modFolders\u003dcreate_train_control%%C:\\Data\\Projects\\create_train_control\\bin\\main"
+      ],
+      "cwd": "${workspaceFolder}\\run",
+      "env": {},
+      "console": "internalConsole",
+      "shortenCommandLine": "none"
+    },
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "GameTestServer",
+      "presentation": {
+        "group": "Mod Development - create_train_control",
+        "order": 2
+      },
+      "projectName": "create_train_control",
+      "mainClass": "net.neoforged.devlaunch.Main",
+      "args": [
+        "@C:\\Data\\Projects\\create_train_control\\build\\moddev\\gameTestServerRunProgramArgs.txt"
+      ],
+      "vmArgs": [
+        "@C:\\Data\\Projects\\create_train_control\\build\\moddev\\gameTestServerRunVmArgs.txt",
+        "-Dfml.modFolders\u003dcreate_train_control%%C:\\Data\\Projects\\create_train_control\\bin\\main"
+      ],
+      "cwd": "${workspaceFolder}\\run",
+      "env": {},
+      "console": "internalConsole",
+      "shortenCommandLine": "none"
+    },
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "Server",
+      "presentation": {
+        "group": "Mod Development - create_train_control",
+        "order": 3
+      },
+      "projectName": "create_train_control",
+      "mainClass": "net.neoforged.devlaunch.Main",
+      "args": [
+        "@C:\\Data\\Projects\\create_train_control\\build\\moddev\\serverRunProgramArgs.txt"
+      ],
+      "vmArgs": [
+        "@C:\\Data\\Projects\\create_train_control\\build\\moddev\\serverRunVmArgs.txt",
+        "-Dfml.modFolders\u003dcreate_train_control%%C:\\Data\\Projects\\create_train_control\\bin\\main"
+      ],
+      "cwd": "${workspaceFolder}\\run",
+      "env": {},
+      "console": "internalConsole",
+      "shortenCommandLine": "none"
+    }
+  ]
+}
