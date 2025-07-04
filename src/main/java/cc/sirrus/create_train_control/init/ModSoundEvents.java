@@ -12,6 +12,13 @@ import cc.sirrus.create_train_control.Create_train_control;
  * 用 NeoForge 的 DeferredRegister 来管理 SoundEvent
  */
 public class ModSoundEvents {
+        /**
+     * 返回实际注册后的 SoundEvent 实例
+     */
+    public static SoundEvent getMainEvent(DeferredHolder<SoundEvent, SoundEvent> holder) {
+        return holder.get();
+    }
+
 
     /** 为 SOUND_EVENT 创建 DeferredRegister */
     public static final DeferredRegister<SoundEvent> SOUNDS =
@@ -34,7 +41,7 @@ public class ModSoundEvents {
 private static DeferredHolder<SoundEvent, SoundEvent> register(String name) {
         // 静态工厂 tryBuild
         ResourceLocation id = ResourceLocation.tryBuild(Create_train_control.MODID, name);
-        if (id == null) throw new IllegalArgumentException("Invalid sounds name: " + name);
+        if (id == null) throw new IllegalArgumentException("Invalid Sounds name: " + name);
         return SOUNDS.register(name, () -> SoundEvent.createVariableRangeEvent(id));
     }
 

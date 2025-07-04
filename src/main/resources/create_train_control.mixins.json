@@ -2,9 +2,12 @@
   "required": true,
   "minVersion": "0.8",
   "package": "cc.sirrus.create_train_control.mixin",
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_21",
   "refmap": "create_train_control.refmap.json",
   "mixins": [
+    "CarriageSoundsMixin",
+    "LoopsoundInvoker",
+    "SuppressSteamMixin"
   ],
   "client": [
   ],
