@@ -1,44 +1,70 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
-# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#Publishing-using-gradle
-
-name: Gradle Package
+name: Build & Publish Artifacts
 
 on:
+  workflow_dispatch:    # 支持手动触发
+  push:
+    tags:
+      - 'v*.*.*'        # 任意符合 v1.2.3 格式的 tag push，也触发上传到 Release
   release:
-    types: [created]
+    types: [created]    # 新创建 Release 时触发（可补充 Release 页面 asset）
 
 jobs:
   build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      # 不管有没有 tag，都上传到 Actions Artifacts
+      - name: Upload build/libs to workflow artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: drop-jars
+          path: build/libs/*.jar
+
+  publish_release_assets:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'release'
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      packages: write
-
+      contents: write
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 21
-      uses: actions/setup-java@v4
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-        server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-        settings-path: ${{ github.workspace }} # location for the settings.xml file
+      - uses: actions/checkout@v4
 
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+      # 下载上一步构建的 jar
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: drop-jars
+          path: artifacts/
 
-    - name: Build with Gradle
-      run: ./gradlew build
+      # 创建或获取 Release（如果是 push tag，则自动 create; 如果是 release.created，则已有）
+      - name: Ensure GitHub Release
+        id: ensure_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}          # 对于 push tag，github.ref_name 会是 tag 名
+          release_name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
-    # the publishing section of your build.gradle
-    - name: Publish to GitHub Packages
-      run: ./gradlew publish
-      env:
-        USERNAME: ${{ github.actor }}
-        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # 把所有 jar 上传为 Release Asset
+      - name: Upload JARs to Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.ensure_release.outputs.upload_url }}
+          asset_path: artifacts/*.jar
+          asset_name: ${{ github.ref_name }}-$(basename ${{ github.run_id }}).jar
+          asset_content_type: application/java-archive
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
