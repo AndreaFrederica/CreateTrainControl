@@ -5,6 +5,8 @@
 - **目标**：允许 Create 的列车使用 VVVF音效。  
 - **平台**：仅支持 Minecraft 1.21.1 + NeoForge；不主动移植到 Fabric，若需自行移植。  
 - **鸣谢**：最初的 VVVF 音频文件和实现 Demo 由 **和光 Channel** 提供，感谢其贡献。
+## 最新版本下载
+[Action](https://github.com/AndreaFrederica/CreateTrainControl/actions)
 
 ## 特性
 
