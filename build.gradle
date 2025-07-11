@@ -118,12 +118,12 @@ sourceSets.main.resources {
 
 dependencies {
 
-    implementation "curse.maven:jei-238222:5846880"
-    implementation "curse.maven:jade-324717:6291517"
+//    implementation "curse.maven:jei-238222:5846880"
+//    implementation "curse.maven:jade-324717:6291517"
 
-    runtimeOnly("curse.maven:applied-energistics-2-223794:6357070")
+//    runtimeOnly("curse.maven:applied-energistics-2-223794:6357070")
     runtimeOnly("curse.maven:guideme-1173950:6331224")
-    runtimeOnly("curse.maven:building-gadgets-298187:5968587")
+//    runtimeOnly("curse.maven:building-gadgets-298187:5968587")
 
     implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
     implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
