@@ -60,14 +60,6 @@ public class CarriageSoundsMixin {
     @Unique private float speedLerpedLast;
     @Unique private float accelAvg;
     @Unique private MovingState state;
-//    @Shadow(remap = false)
-//    Object minecartEsqueSound;
-//    @Shadow(remap = false)
-//    Object sharedHonkSound;
-//	@Shadow(remap = false)
-//	Object sharedWheelSoundSeated;
-//	@Shadow(remap = false)
-//	Object sharedWheelSound;
 
 	public void finalizeSharedVolume(float volume) {
         float crossfade = seatCrossfade.getValue();
@@ -88,12 +80,9 @@ public class CarriageSoundsMixin {
             float v0 = (1 - crossfade * .65f) * volume / 2;
             float v1 = Math.min(volume, Math.max((speedFactor.getValue() - .25f) / 4 + .01f, 0));
 
-        //((LoopsoundInvoker) minecartEsqueSound).invokeSetVolume((1 - crossfade * .65f) * volume / 2);
 		SoundInvokerUtils.safeInvokeSetVolume(minecartEsqueSound, ((1 - crossfade * .65f) * volume / 2));
         volume = Math.min(volume, Math.max((speedFactor.getValue() - .25f) / 4 + 0.01f, 0));
-        //((LoopsoundInvoker) sharedWheelSoundSeated).invokeSetVolume(volume * crossfade);
 		SoundInvokerUtils.safeInvokeSetVolume(sharedWheelSoundSeated, (volume * crossfade));
-        //((LoopsoundInvoker) sharedWheelSound).invokeSetVolume(volume * (1 - crossfade) * 1.5f);
 		SoundInvokerUtils.safeInvokeSetVolume(sharedWheelSound,(volume * (1 - crossfade) * 1.5f));
         } catch (ReflectiveOperationException e) {
             Create.LOGGER.error("反射执行 finalizeSharedVolume 失败", e);
@@ -108,77 +97,6 @@ public class CarriageSoundsMixin {
         speedLerpedLast = 0;
         accelAvg = 0;
     }
-
-    // 在 tick 方法尾部注入新逻辑
-//    @Inject(method = "tick", at = @At("TAIL"))
-//    private void afterTick(DimensionalCarriageEntity dce, CallbackInfo ci) {
-//        Minecraft mc = Minecraft.getInstance();
-//        // 初始化循环声音
-//        motor1Sound = playIfMissing(mc, motor1Sound, ModSoundEvents.MOTOR_1.get());
-//        motor2Sound = playIfMissing(mc, motor2Sound, ModSoundEvents.MOTOR_2.get());
-//        vvvf1Sound  = playIfMissing(mc, vvvf1Sound, ModSoundEvents.VVVF_1.get());
-//        vvvf2Sound  = playIfMissing(mc, vvvf2Sound, ModSoundEvents.VVVF_2.get());
-//        vvvf3Sound  = playIfMissing(mc, vvvf3Sound, ModSoundEvents.VVVF_3.get());
-//        vvvf4Sound  = playIfMissing(mc, vvvf4Sound, ModSoundEvents.VVVF_4.get());
-//        vvvf5Sound  = playIfMissing(mc, vvvf5Sound, ModSoundEvents.VVVF_5.get());
-//        vvvf6Sound  = playIfMissing(mc, vvvf6Sound, ModSoundEvents.VVVF_6.get());
-//        vvvf7Sound  = playIfMissing(mc, vvvf7Sound, ModSoundEvents.VVVF_7.get());
-//        vvvf8Sound  = playIfMissing(mc, vvvf8Sound, ModSoundEvents.VVVF_8.get());
-//
-//        // 计算基础音量
-//        float baseVol = Math.min(
-//            distanceFactor.getValue() / 100,
-//            approachFactor.getValue() / 300 + .0125f
-//        );
-//
-//        // 获取速度因子
-//        speedLerped = speedFactor.getValue();
-//        float acc = speedLerped - speedLerpedLast;
-//        accelAvg = (accelAvg * 0.5f) + (acc * 0.5f);
-//        speedLerpedLast = speedLerped;
-//        float tacc = entity.getCarriage().train.acceleration();
-//        // 简化的加速状态机示例…（可依据原逻辑填充）
-//
-//        float sf = speedLerped * 20f * 3.6f;
-//        if (sf > 0.1f) {
-//            sf *= 1.2f;
-//            float atten = Math.min(1.0f, Math.max(sf / 50f * -1f + 1.8f, 0.1f));
-//
-//            // Motor 音量与音高
-//            float motorVol = baseVol * Math.min(1.0f, Math.max((sf - 8f) / 8f, 0f)) * atten * 0.8f;
-//            if (sf < 32) {
-//                motor1Sound.setVolume(motorVol);
-//                motor2Sound.setVolume(0);
-//                motor1Sound.setPitch(sf / 16f);
-//            } else {
-//                motor1Sound.setVolume(0);
-//                motor2Sound.setVolume(motorVol);
-//                motor2Sound.setPitch(sf / 64f);
-//            }
-//
-//            // VVVF 音量分段
-//            float vvvfVol = baseVol * Math.min(1.0f, sf / 6f) * atten * 0.7f;
-//            for (int i = 0; i < vvvfVolumes.length; i++) vvvfVolumes[i] = 0;
-//            int idx = Math.min(7, (int)(sf / 10));
-//            vvvfVolumes[idx] = vvvfVol;
-//
-//            // 应用到各 VVVF 声音
-//            vvvf1Sound.setVolume(vvvfVolumes[0]);
-//            vvvf2Sound.setVolume(vvvfVolumes[1]);
-//            vvvf3Sound.setVolume(vvvfVolumes[2]);
-//            vvvf4Sound.setVolume(vvvfVolumes[3]);
-//            vvvf5Sound.setVolume(vvvfVolumes[4]);
-//            vvvf6Sound.setVolume(vvvfVolumes[5]);
-//            vvvf7Sound.setVolume(vvvfVolumes[6]);
-//            vvvf8Sound.setVolume(vvvfVolumes[7]);
-//        } else {
-//            motor1Sound.setVolume(0);
-//            motor2Sound.setVolume(0);
-//            for (LoopingSound vvvf : new LoopingSound[]{vvvf1Sound,vvvf2Sound,vvvf3Sound,vvvf4Sound,vvvf5Sound,vvvf6Sound,vvvf7Sound,vvvf8Sound}) {
-//                vvvf.setVolume(0);
-//            }
-//        }
-//    }
 
        @Inject(
         method = "tick",
@@ -225,38 +143,13 @@ Entity camEntity = mc.cameraEntity;
 		double distance2 = toBogey2.length();
         Vec3 toCarriage = distance1 > distance2 ? toBogey2 : toBogey1;
         Vec3 soundLocation = cam.add(toCarriage);
-		//float volume = Math.min(Math.min(speedFactor.getValue(), distanceFactor.getValue() / 100),
-		//	approachFactor.getValue() / 300 + .0125f);
 		// VVVF sound is not attenuated by speed factor
 		float volume = Math.min(distanceFactor.getValue() / 100, approachFactor.getValue() / 300 + .0125f);
-
-		// if (entity.carriageIndex == 0) {
-		// 	float v = volume * (1 - seatCrossfade.getValue() * .35f) * .75f;
-		// 	if ((3 + tick) % 4 == 0)
-		// 		AllSoundEvents.STEAM.playAt(entity.level(), soundLocation, v * ((tick + 7) % 8 == 0 ? 0.75f : .45f),
-		// 			1.17f, false);
-		// 	if (tick % 16 == 0)
-		// 		AllSoundEvents.STEAM.playAt(entity.level(), soundLocation, v * 1.5f, .8f, false);
-		// }
-
-		// if (!arrived && speedFactor.getValue() < .002f && train.accumulatedSteamRelease > 1) {
-		// 	arrived = true;
-		// 	float releaseVolume = train.accumulatedSteamRelease / 10f;
-		// 	entity.level().playLocalSound(soundLocation.x, soundLocation.y, soundLocation.z, SoundEvents.LAVA_EXTINGUISH,
-		// 		SoundSource.NEUTRAL, .25f * releaseVolume, .78f, false);
-		// 	entity.level().playLocalSound(soundLocation.x, soundLocation.y, soundLocation.z,
-		// 		SoundEvents.WOODEN_TRAPDOOR_CLOSE, SoundSource.NEUTRAL, .2f * releaseVolume, 1.5f, false);
-		// 	AllSoundEvents.STEAM.playAt(entity.level(), soundLocation, .75f * releaseVolume, .5f, false);
-		// }
-
 		float pitchModifier = ((entity.getId() * 10) % 13) / 36f;
-
 		volume = Math.min(volume, distanceFactor.getValue() / 800);
-
 		float pitch = Mth.clamp(speedFactor.getValue() * 2 + .25f, .75f, 1.95f) - pitchModifier;
 		float pitch2 = Mth.clamp(speedFactor.getValue() * 2, 0.75f, 1.25f) - pitchModifier;
         Train train = entity.getCarriage().train;
-           //((LoopsoundInvoker)minecartEsqueSound).invokeSetPitch(pitch * 1.5f);
 		   SoundInvokerUtils.safeInvokeSetPitch(((LoopsoundInvoker)minecartEsqueSound), pitch * 1.5f);
 		speedLerped = speedFactor.getValue();
 		float acc = speedLerped - speedLerpedLast;
@@ -397,15 +290,8 @@ Entity camEntity = mc.cameraEntity;
 			}
 			break;
 		}
-
-//		finalizeSharedVolume(volume);
-//		minecartEsqueSound.setLocation(soundLocation);
-		//((LoopsoundInvoker)sharedWheelSound).invokeSetPitch(pitch2);
 		SoundInvokerUtils.safeInvokeSetPitch(sharedWheelSound, pitch2);
-//		sharedWheelSound.setLocation(soundLocation);
-		//((LoopsoundInvoker)sharedWheelSoundSeated).invokeSetPitch(pitch2);
 		SoundInvokerUtils.safeInvokeSetPitch(sharedWheelSoundSeated,pitch2);
-//		sharedWheelSoundSeated.setLocation(soundLocation);
 
 		if (train.honkTicks == 0) {
 			if (sharedHonkSound != null) {
@@ -436,13 +322,10 @@ Entity camEntity = mc.cameraEntity;
 			endSound.playAt(mc.level, soundLocation, .5f, honkPitch, false);
 
 		sharedHonkSound = playIfMissing(mc, (LoopingSound) sharedHonkSound, continuousSound.getMainEvent());
-		//((LoopsoundInvoker)sharedHonkSound).invokeSetLocation(soundLocation);
 		SoundInvokerUtils.safeInvokeSetLocation(sharedHonkSound,soundLocation);
 		float fadeout = Mth.clamp((3 - train.honkTicks) / 3f, 0, 1);
 		float fadein = Mth.clamp((train.honkTicks - 17) / 3f, 0, 1);
-		//((LoopsoundInvoker)sharedHonkSound).invokeSetVolume(1 - fadeout - fadein);
 		SoundInvokerUtils.safeInvokeSetVolume(sharedHonkSound,1 - fadeout - fadein);
-		//((LoopsoundInvoker)sharedHonkSound).invokeSetPitch(honkPitch);
 		SoundInvokerUtils.safeInvokeSetPitch(sharedHonkSound,honkPitch);
 
         } catch (ReflectiveOperationException e) {
